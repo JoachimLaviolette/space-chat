@@ -32,8 +32,6 @@ socketIOServer = (server) => {
     socket.on("updateChat", (message) => {
       // Update the chat logger
       chatContent.push(message);
-      // Send the new message to the emitter
-      socket.emit("updateChat", chatContent);
       // Send the chat content to the other chat participants
       socket.broadcast.emit("updateChat", chatContent);
     });
@@ -41,8 +39,6 @@ socketIOServer = (server) => {
     // When a user send a message in the docs
     socket.on("updateDocs", (newContent) => {
       docsContent = newContent;
-      // Send the updated content to the emitter
-      socket.emit("updateDocs", docsContent);
       // Send the updated content to the other chat participants
       socket.broadcast.emit("updateDocs", docsContent);
     });

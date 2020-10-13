@@ -60,6 +60,7 @@ class DocsPage extends Component {
    * @param {string} source Who the update comes from, the client itself ("user") or the server ("api")
    */
   handleChange = (contentHtml, delta, source) => {
+    console.log(source);
     if (source === "api") return;
 
     this.setState({
