@@ -4,7 +4,7 @@ import { Themes, URLS } from "../../Utils";
 const currentTime = new Date().getHours();
 let user = localStorage.getItem("user");
 user = user ? JSON.parse(user) : undefined;
-let theme =
+const theme =
   localStorage.getItem("theme") ??
   (currentTime > 18 || currentTime < 7 ? Themes.DARK : Themes.LIGHT);
 const initialState = {
@@ -27,10 +27,10 @@ const reducer = (state = initialState, action) => {
         ...state,
         user: undefined,
       };
-    case ActionType.UPDATE_THEME:
+    case ActionType.UPDATE_THEME_SUCCESS:
       return {
         ...state,
-        theme: action.payload.theme,
+        theme: action.payload,
       };
     default:
       return state;

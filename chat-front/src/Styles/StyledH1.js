@@ -10,11 +10,6 @@ const StyledH1 = styled.p`
   text-align: ${(props) => props.textAlign};
   margin: ${(props) => props.margin || 0};
   padding: ${(props) => props.padding || 0};
-  color: ${(props) =>
-    props.color ||
-    (props.theme === Themes.LIGHT
-      ? DefaultStyle.COLOR.DARK
-      : DefaultStyle.COLOR.LIGHT)};
   text-align: ${(props) => props.textAlign || ""};
 
   @media ${DefaultStyle.MIN_DEVICE.TABLET} {

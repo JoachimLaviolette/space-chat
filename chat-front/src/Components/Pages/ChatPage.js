@@ -20,10 +20,15 @@ class ChatPage extends Component {
     super(props);
 
     this.state = {
-      theme: Themes.LIGHT,
       params: {
-        [Themes.LIGHT]: { backgroundColor: Themes.DARK },
-        [Themes.DARK]: { backgroundColor: Themes.LIGHT },
+        [Themes.LIGHT]: {
+          backgroundColor: DefaultStyle.COLOR.LIGHT,
+          textColor: DefaultStyle.COLOR.DARK,
+        },
+        [Themes.DARK]: {
+          backgroundColor: DefaultStyle.COLOR.DARK,
+          textColor: DefaultStyle.COLOR.LIGHT,
+        },
       },
       content: [],
       message: "",
@@ -73,14 +78,15 @@ class ChatPage extends Component {
   };
 
   render = () => (
-    <Page backgroundColor={this.state.params[this.state.theme].backgroundColor}>
+    <Page backgroundColor={this.state.params[this.props.theme].backgroundColor}>
       <StyledFlexBox
+        color={this.state.params[this.props.theme].textColor}
         margin={"auto 25%"}
         mobileMargin={"auto 2rem"}
         padding={"2rem"}
       >
         <StyledH3
-          theme={this.state.theme}
+          theme={this.props.theme}
           padding={"0 0 2rem 0"}
           textAlign={"center"}
         >
@@ -117,6 +123,7 @@ class ChatPage extends Component {
                 <StyledParagraph
                   padding={"0.2rem 0"}
                   color={DefaultStyle.COLOR.GRAY}
+                  fontSize={DefaultStyle.FONT_SIZE.VERY_SMALL}
                 >
                   {message.content}
                 </StyledParagraph>
@@ -134,31 +141,31 @@ class ChatPage extends Component {
           />
           <StyledButton
             onClick={this.handleSending}
-            enabled={this.state.message.trim().length != 0}
+            enabled={this.state.message.trim().length !== 0}
           >
-            <i class="fas fa-paper-plane"></i>
+            <i className="fas fa-paper-plane"></i>
           </StyledButton>
         </StyledGridBox>
-        <StyledAnchor as={Link} to={URLS.DOCS_PAGE}>
-          <StyledButton
-            margin={"3rem auto 0 auto"}
-            width={"11rem"}
-            mobileWidth={"15rem"}
-            enabled={true}
+        <StyledButton
+          margin={"3rem auto 0 auto"}
+          width={"11rem"}
+          mobileWidth={"15rem"}
+          enabled={true}
+        >
+          <StyledAnchor
+            as={Link}
+            to={URLS.DOCS_PAGE}
+            color={DefaultStyle.COLOR.WHITE}
           >
             <StyledSpan margin={"0 0.5rem 0 0"}>
-              <i class="fas fa-arrow-alt-circle-right"></i>{" "}
+              <i className="fas fa-arrow-alt-circle-right"></i>{" "}
             </StyledSpan>
             {"Space'Docs"}
-          </StyledButton>
-        </StyledAnchor>
+          </StyledAnchor>
+        </StyledButton>
       </StyledFlexBox>
     </Page>
   );
 }
-
-function mapStateToProps(state) {
-  return { ...state, currentPath: URLS.CHAT_PAGE };
-}
-
+const mapStateToProps = (state) => ({ ...state, currentPath: URLS.CHAT_PAGE });
 export default connect(mapStateToProps, null)(ChatPage);

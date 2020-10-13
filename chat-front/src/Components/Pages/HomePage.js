@@ -8,6 +8,7 @@ import {
   StyledInput,
   StyledConfirmButton,
   StyledFlexBox,
+  DefaultStyle,
 } from "../../Styles";
 import { Themes, URLS } from "../../Utils";
 import { ActionType, login } from "../../Redux/Actions";
@@ -17,10 +18,15 @@ class HomePage extends Component {
     super(props);
 
     this.state = {
-      theme: Themes.LIGHT,
       params: {
-        [Themes.LIGHT]: { backgroundColor: Themes.DARK },
-        [Themes.DARK]: { backgroundColor: Themes.LIGHT },
+        [Themes.LIGHT]: {
+          backgroundColor: DefaultStyle.COLOR.LIGHT,
+          textColor: DefaultStyle.COLOR.DARK,
+        },
+        [Themes.DARK]: {
+          backgroundColor: DefaultStyle.COLOR.DARK,
+          textColor: DefaultStyle.COLOR.LIGHT,
+        },
       },
       pseudo: props.user ? props.user.pseudo : "",
       redirect: undefined,
@@ -63,11 +69,15 @@ class HomePage extends Component {
 
     return (
       <Page
-        backgroundColor={this.state.params[this.state.theme].backgroundColor}
+        backgroundColor={this.state.params[this.props.theme].backgroundColor}
       >
-        <StyledFlexBox margin={"auto"} padding={"0 2rem"}>
+        <StyledFlexBox
+          color={this.state.params[this.props.theme].textColor}
+          margin={"auto"}
+          padding={"0 2rem"}
+        >
           <StyledH3
-            theme={this.state.theme}
+            theme={this.props.theme}
             padding={"0 0 2rem 0"}
             textAlign={"center"}
           >
@@ -75,15 +85,16 @@ class HomePage extends Component {
           </StyledH3>
           <StyledFlexBox padding={"0 5rem"}>
             <StyledInput
-              value={this.state.pseudo}
               id={"pseudo"}
+              autoComplete={"off"}
+              value={this.state.pseudo}
               placeholder={"Your pseudo here"}
               onChange={this.handleChange}
             />
             <StyledConfirmButton
               margin={"1rem 0"}
               onClick={this.handleLogin}
-              enabled={this.state.pseudo.trim().length != 0}
+              enabled={this.state.pseudo.trim().length !== 0}
             >
               {"LOG IN"}
             </StyledConfirmButton>
@@ -93,13 +104,8 @@ class HomePage extends Component {
     );
   };
 }
-
-function mapStateToProps(state) {
-  return { ...state, currentPath: URLS.HOME_PAGE };
-}
-
+const mapStateToProps = (state) => ({ ...state, currentPath: URLS.HOME_PAGE });
 const mapDispatchToProps = {
   login: login,
 };
-
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

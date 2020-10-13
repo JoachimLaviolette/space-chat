@@ -5,7 +5,7 @@ import { Themes } from "../Utils";
 const StyledMenu = styled(StyledFlexBox)`
   display: ${(props) => props.display || "none"};
   background-color: ${(props) =>
-    props.theme == Themes.LIGHT
+    props.theme === Themes.LIGHT
       ? DefaultStyle.COLOR.LIGHT
       : DefaultStyle.COLOR.DARK};
   position: fixed;

@@ -7,23 +7,31 @@ const StyledButton = styled.button`
   margin: ${(props) => props.margin || ""};
   width: ${(props) => props.mobileWidth || ""};
   padding: 1rem;
-  border-radius: 2rem;
+  border-radius: ${(props) => props.borderRadius || "2rem"};
   border: none;
-  text-shadow: ${"-1px 1px 3px " + DefaultStyle.COLOR.DARK_SECONDARY};
   transition: 0.2s ease;
-  background: ${(props) =>
-    props.enabled ? DefaultStyle.COLOR.SECONDARY : DefaultStyle.COLOR.DISABLED};
+  background-color: ${(props) =>
+    props.enabled
+      ? props.backgroundColor || DefaultStyle.COLOR.SECONDARY
+      : DefaultStyle.COLOR.DISABLED};
   color: ${(props) =>
     props.enabled
-      ? DefaultStyle.COLOR.LIGHT
+      ? props.color || DefaultStyle.COLOR.LIGHT
       : DefaultStyle.COLOR.DARK_DISABLED};
   font-weight: ${(props) => (props.enabled ? "bold" : "normal")};
   text-shadow: ${(props) =>
-    props.enabled
+    props.noShadow
+      ? "0px 0px 0px"
+      : props.enabled
       ? "-1px 1px 3px " + DefaultStyle.COLOR.DARK_SECONDARY
       : "0px 0px 0px"};
   box-shadow: 0px 0px 0px
-    ${(props) => (props.enabled ? DefaultStyle.COLOR.DARK_SECONDARY : "")};
+    ${(props) =>
+      props.noShadow
+        ? ""
+        : props.enabled
+        ? DefaultStyle.COLOR.DARK_SECONDARY
+        : ""};
 
   &:hover {
     opacity: ${(props) => (props.enabled ? 0.8 : 1)};

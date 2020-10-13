@@ -1,6 +1,15 @@
 import { ActionType } from "./Types";
 
-export const updateTheme = (data) => ({
+export const updateTheme = (theme) => ({
   type: ActionType.UPDATE_THEME,
-  payload: data,
+  payload: theme,
+});
+
+export const updateThemeSuccess = (theme) => ({
+  type: ActionType.UPDATE_THEME_SUCCESS,
+  payload: theme,
+});
+
+export const updateThemeFailure = (theme) => ({
+  type: ActionType.UPDATE_THEME_FAILURE,
 });

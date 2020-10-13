@@ -8,9 +8,10 @@ import {
   StyledSpan,
   StyledFlexBox,
   StyledH3,
+  DefaultStyle,
 } from "../../Styles";
 import { Themes, URLS } from "../../Utils";
-import ReactQuill, { Quill } from "react-quill";
+import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 class DocsPage extends Component {
@@ -18,10 +19,15 @@ class DocsPage extends Component {
     super(props);
 
     this.state = {
-      theme: Themes.LIGHT,
       params: {
-        [Themes.LIGHT]: { backgroundColor: Themes.DARK },
-        [Themes.DARK]: { backgroundColor: Themes.LIGHT },
+        [Themes.LIGHT]: {
+          backgroundColor: DefaultStyle.COLOR.LIGHT,
+          textColor: DefaultStyle.COLOR.DARK,
+        },
+        [Themes.DARK]: {
+          backgroundColor: DefaultStyle.COLOR.DARK,
+          textColor: DefaultStyle.COLOR.LIGHT,
+        },
       },
       contentHtml: "",
     };
@@ -113,14 +119,14 @@ class DocsPage extends Component {
   ];
 
   render = () => (
-    <Page backgroundColor={this.state.params[this.state.theme].backgroundColor}>
+    <Page backgroundColor={this.state.params[this.props.theme].backgroundColor}>
       <StyledFlexBox
         margin={"auto 25%"}
         mobileMargin={"auto 2rem"}
         padding={"2rem"}
       >
         <StyledH3
-          theme={this.state.theme}
+          theme={this.props.theme}
           padding={"0 0 2rem 0"}
           textAlign={"center"}
         >
@@ -134,26 +140,26 @@ class DocsPage extends Component {
           modules={this.modules}
           formats={this.formats}
         />
-        <StyledAnchor as={Link} to={URLS.CHAT_PAGE}>
-          <StyledButton
-            margin={"3rem auto 0 auto"}
-            width={"11rem"}
-            mobileWidth={"15rem"}
-            enabled={true}
+        <StyledButton
+          margin={"3rem auto 0 auto"}
+          width={"11rem"}
+          mobileWidth={"15rem"}
+          enabled={true}
+        >
+          <StyledAnchor
+            as={Link}
+            to={URLS.CHAT_PAGE}
+            color={DefaultStyle.COLOR.WHITE}
           >
             <StyledSpan margin={"0 0.5rem 0 0"}>
-              <i class="fas fa-arrow-alt-circle-right"></i>{" "}
+              <i className="fas fa-arrow-alt-circle-right"></i>{" "}
             </StyledSpan>
             {"Space'Chat"}
-          </StyledButton>
-        </StyledAnchor>
+          </StyledAnchor>
+        </StyledButton>
       </StyledFlexBox>
     </Page>
   );
 }
-
-function mapStateToProps(state) {
-  return { ...state, currentPath: URLS.COMMON_PAGE };
-}
-
+const mapStateToProps = (state) => ({ ...state, currentPath: URLS.DOCS_PAGE });
 export default connect(mapStateToProps, null)(DocsPage);

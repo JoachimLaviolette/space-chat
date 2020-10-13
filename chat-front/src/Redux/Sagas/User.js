@@ -14,4 +14,5 @@ export function* login(action) {
 export function* logout() {
   localStorage.removeItem("user");
   localStorage.removeItem("theme");
+  yield null;
 }
