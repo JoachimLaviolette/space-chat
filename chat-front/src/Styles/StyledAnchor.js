@@ -7,8 +7,9 @@ const StyledAnchor = styled.a`
   text-align: ${(props) => props.textAlign || ""};
   text-decoration: none;
   transition: ${(props) => props.transition || ""};
+
   &:hover {
-    color: ${(props) => (props.hoverable ? DefaultStyle.COLOR.PRIMARY : "")};
+    color: ${(props) => (props.hoverable ? DefaultStyle.COLOR.SECONDARY : "")};
     transition: ${(props) => props.transition || ""};
   }
 `;

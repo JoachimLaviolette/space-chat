@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { HomePage, ChatPage, DocsPage } from "./Pages";
 import { URLS } from "../Utils";
 
-function Router() {
+const Router = () => {
   return (
     <BrowserRouter>
       <Switch>
@@ -13,6 +13,6 @@ function Router() {
       </Switch>
     </BrowserRouter>
   );
-}
+};
 
 export default Router;

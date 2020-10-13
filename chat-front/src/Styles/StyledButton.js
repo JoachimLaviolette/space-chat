@@ -5,7 +5,7 @@ const StyledButton = styled.button`
   font-size: ${DefaultStyle.FONT_SIZE.MEDIUM};
   cursor: ${(props) => (props.enabled ? "pointer" : "not-allowed")};
   margin: ${(props) => props.margin || ""};
-  width: ${(props) => props.width || ""};
+  width: ${(props) => props.mobileWidth || ""};
   padding: 1rem;
   border-radius: 2rem;
   border: none;
@@ -34,13 +34,9 @@ const StyledButton = styled.button`
     outline-width: 0;
   }
 
-  &:hover {
-    opacity: 1;
-    transition: 0.2s ease;
-  }
-
   @media ${DefaultStyle.MIN_DEVICE.TABLET} {
     font-size: ${DefaultStyle.FONT_SIZE.SMALLER};
+    width: ${(props) => props.width || ""};
     padding: 0.5rem;
   }
 `;

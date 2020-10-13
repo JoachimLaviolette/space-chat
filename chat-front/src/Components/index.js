@@ -1,4 +1,5 @@
+import Link from "./Link";
 import Page from "./Page";
 import Router from "./Router";
 
-export { Page, Router };
+export { Link, Page, Router };

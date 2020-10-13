@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import io from "socket.io-client";
-import { Page } from "../";
+import { Link, Page } from "..";
 import {
+  StyledAnchor,
   StyledFlexBox,
   StyledGridBox,
   StyledInput,
@@ -31,31 +32,44 @@ class ChatPage extends Component {
     this.setupServer();
   }
 
+  /**
+   * Handle message input changes
+   */
   handleChange = () => {
-    this.setState({ message: document.getElementById("message").value });
+    this.setState({ message: document.querySelector("#message").value });
   };
 
+  /**
+   * Triggered when send button is clicked
+   */
   handleSending = () => {
     this.socket.emit("updateChat", {
       pseudo: this.props.user.pseudo,
-      content: document.getElementById("message").value.trim(),
+      content: document.querySelector("#message").value.trim(),
       time: new Date().toLocaleTimeString(),
     });
     this.setState({ message: "" });
   };
 
+  /**
+   * Setup the real time server
+   */
   setupServer = () => {
     this.socket = io.connect("http://localhost:5000");
     this.socket.on("updateChat", (chatContent) => this.updateChat(chatContent));
   };
 
+  /**
+   * Called when the server sends back the event "updateChat"
+   * @param {string} chatContent The updated chat content to now display
+   */
   updateChat = (chatContent) => {
     this.setState({
       content: chatContent,
     });
-    document.getElementById("content").scrollTop = document.getElementById(
-      "content"
-    ).scrollHeight;
+    const contentContainer = document.querySelector("#content");
+    if (!contentContainer) return;
+    contentContainer.scrollTop = contentContainer.scrollHeight;
   };
 
   render = () => (
@@ -94,15 +108,18 @@ class ChatPage extends Component {
                   color={DefaultStyle.COLOR.DARK_GRAY}
                 >
                   {message.pseudo}
-                </StyledSpan>
+                </StyledSpan>{" "}
                 <StyledSpan color={DefaultStyle.COLOR.DARK_GRAY}>
-                  {" ["}
+                  {" ("}
                   {message.time}
-                  {"]: "}
+                  {") "}
                 </StyledSpan>
-                <StyledSpan color={DefaultStyle.COLOR.GRAY}>
+                <StyledParagraph
+                  padding={"0.2rem 0"}
+                  color={DefaultStyle.COLOR.GRAY}
+                >
                   {message.content}
-                </StyledSpan>
+                </StyledParagraph>
               </StyledParagraph>
             );
           })}
@@ -122,6 +139,19 @@ class ChatPage extends Component {
             <i class="fas fa-paper-plane"></i>
           </StyledButton>
         </StyledGridBox>
+        <StyledAnchor as={Link} to={URLS.DOCS_PAGE}>
+          <StyledButton
+            margin={"3rem auto 0 auto"}
+            width={"11rem"}
+            mobileWidth={"15rem"}
+            enabled={true}
+          >
+            <StyledSpan margin={"0 0.5rem 0 0"}>
+              <i class="fas fa-arrow-alt-circle-right"></i>{" "}
+            </StyledSpan>
+            {"Space'Docs"}
+          </StyledButton>
+        </StyledAnchor>
       </StyledFlexBox>
     </Page>
   );
