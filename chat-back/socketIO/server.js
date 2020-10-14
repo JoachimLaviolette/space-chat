@@ -34,6 +34,8 @@ socketIOServer = (server) => {
       chatContent.push(message);
       // Send the chat content to the other chat participants
       socket.broadcast.emit("updateChat", chatContent);
+      // Send the chat content to the emitter
+      socket.emit("updateChat", chatContent);
     });
 
     // When a user send a message in the docs

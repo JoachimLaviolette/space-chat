@@ -122,6 +122,7 @@ class DocsPage extends Component {
   render = () => (
     <Page backgroundColor={this.state.params[this.props.theme].backgroundColor}>
       <StyledFlexBox
+        color={this.state.params[this.props.theme].textColor}
         margin={"auto 25%"}
         mobileMargin={"auto 2rem"}
         padding={"2rem"}
