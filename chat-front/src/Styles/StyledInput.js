@@ -3,22 +3,22 @@ import { DefaultStyle } from ".";
 
 const StyledInput = styled.input`
   font-size: ${DefaultStyle.FONT_SIZE.MEDIUM};
+  font-weight: normal;
   padding: 1rem;
   width: ${(props) => props.width || ""};
   border: none;
-  background: ${DefaultStyle.COLOR.LIGHT_GRAY};
+  background: ${(props) => props.backgroundColor};
   border-radius: 0.5rem;
   text-align: ${(props) => props.textAlign || "center"};
-  color: ${DefaultStyle.COLOR.GRAY};
+  color: ${DefaultStyle.COLOR.PRIMARY};
 
   &:focus {
+    font-weight: bold;
     outline-width: 0;
-    background: ${DefaultStyle.COLOR.TERTIARY};
-    color: ${DefaultStyle.COLOR.PRIMARY};
+  }
 
-    &::placeholder {
-      color: ${DefaultStyle.COLOR.PRIMARY};
-    }
+  &::placeholder {
+    color: ${DefaultStyle.COLOR.PRIMARY};
   }
 
   @media ${DefaultStyle.MIN_DEVICE.TABLET} {

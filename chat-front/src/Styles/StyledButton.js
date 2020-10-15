@@ -23,15 +23,8 @@ const StyledButton = styled.button`
     props.noShadow
       ? "0px 0px 0px"
       : props.enabled
-      ? "-1px 1px 3px " + DefaultStyle.COLOR.DARK_SECONDARY
+      ? "-1px 1px 3px " + DefaultStyle.COLOR.PRIMARY
       : "0px 0px 0px"};
-  box-shadow: 0px 0px 0px
-    ${(props) =>
-      props.noShadow
-        ? ""
-        : props.enabled
-        ? DefaultStyle.COLOR.DARK_SECONDARY
-        : ""};
 
   &:hover {
     opacity: ${(props) => (props.enabled ? 0.8 : 1)};

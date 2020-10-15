@@ -6,4 +6,10 @@ export const ActionType = {
   UPDATE_THEME: "update_theme",
   UPDATE_THEME_SUCCESS: "update_theme_success",
   UPDATE_THEME_FAILURE: "update_theme_failure",
+  UPDATE_ROOM: "update_room",
+  UPDATE_ROOM_SUCCESS: "update_room_success",
+  UPDATE_ROOM_FAILURE: "update_room_failure",
+  UPDATE_ROOMS: "update_rooms",
+  UPDATE_ROOMS_SUCCESS: "update_rooms_success",
+  UPDATE_ROOMS_FAILURE: "update_rooms_failure",
 };

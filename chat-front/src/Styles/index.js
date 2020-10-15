@@ -19,6 +19,7 @@ import StyledSpan from "./StyledSpan";
 import StyledTextarea from "./StyledTextarea";
 import StyledUl from "./StyledUl";
 import StyledThemeSwitcher from "./StyledThemeSwitcher";
+import StyledRoom from "./StyledRoom";
 
 export {
   DefaultStyle,
@@ -42,4 +43,5 @@ export {
   StyledTextarea,
   StyledUl,
   StyledThemeSwitcher,
+  StyledRoom,
 };

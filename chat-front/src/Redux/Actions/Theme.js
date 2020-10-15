@@ -10,6 +10,6 @@ export const updateThemeSuccess = (theme) => ({
   payload: theme,
 });
 
-export const updateThemeFailure = (theme) => ({
+export const updateThemeFailure = () => ({
   type: ActionType.UPDATE_THEME_FAILURE,
 });

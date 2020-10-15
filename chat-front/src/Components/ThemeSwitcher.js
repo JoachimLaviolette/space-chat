@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { DefaultStyle, StyledThemeSwitcher, StyledSpan } from "../Styles";
+import { DefaultStyle, StyledThemeSwitcher, StyledParagraph } from "../Styles";
 import { Themes } from "../Utils";
 import { updateTheme } from "../Redux/Actions";
 
@@ -13,14 +13,12 @@ class ThemeSwitcher extends Component {
         [Themes.LIGHT]: {
           backgroundColor: DefaultStyle.COLOR.DARK_SECONDARY,
           textColor: DefaultStyle.COLOR.WHITE,
-          iconClass: "far fa-moon",
-          text: "DARK",
+          iconClass: "fas fa-moon",
         },
         [Themes.DARK]: {
           backgroundColor: DefaultStyle.COLOR.LIGHT,
           textColor: DefaultStyle.COLOR.THEME_SWITCHER_DARK,
           iconClass: "fas fa-sun",
-          text: "LIGHT",
         },
       },
     };
@@ -38,15 +36,8 @@ class ThemeSwitcher extends Component {
 
   render = () => {
     return (
-      <StyledThemeSwitcher
-        borderRadius={"0.3rem"}
-        theme={this.props.theme}
-        onClick={this.updateTheme}
-      >
-        <StyledSpan margin={"0 0.5rem 0 0"}>
-          <i className={this.state.params[this.props.theme].iconClass}></i>
-        </StyledSpan>
-        {this.state.params[this.props.theme].text + " THEME"}
+      <StyledThemeSwitcher theme={this.props.theme} onClick={this.updateTheme}>
+        <i className={this.state.params[this.props.theme].iconClass}></i>
       </StyledThemeSwitcher>
     );
   };

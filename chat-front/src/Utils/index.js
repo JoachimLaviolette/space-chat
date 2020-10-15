@@ -7,4 +7,5 @@ export const URLS = {
   HOME_PAGE: "/",
   CHAT_PAGE: "/chat",
   DOCS_PAGE: "/docs",
+  ROOM_PAGE: "/rooms",
 };

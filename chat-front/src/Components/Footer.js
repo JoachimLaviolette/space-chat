@@ -7,18 +7,34 @@ import {
   StyledAnchor,
 } from "../Styles";
 import { Link } from ".";
-import { URLS } from "../Utils";
+import { URLS, Themes } from "../Utils";
 
-const Footer = () => {
+const Footer = (props) => {
   return (
     <StyledFlexBox
-      backgroundColor={DefaultStyle.COLOR.FOOTER}
+      backgroundColor={
+        props.theme === Themes.LIGHT
+          ? DefaultStyle.COLOR.FOOTER_LIGHT
+          : DefaultStyle.COLOR.FOOTER_DARK
+      }
       padding={"2rem"}
       textAlign={"center"}
-      color={DefaultStyle.COLOR.WHITE}
+      color={
+        props.theme === Themes.DARK
+          ? DefaultStyle.COLOR.FOOTER_LIGHT
+          : DefaultStyle.COLOR.FOOTER_DARK
+      }
     >
       <StyledParagraph>{"Space'Chat"}</StyledParagraph>
-      <StyledAnchor as={Link} to={URLS.HOME_PAGE}>
+      <StyledAnchor
+        color={
+          props.theme === Themes.DARK
+            ? DefaultStyle.COLOR.FOOTER_LIGHT
+            : DefaultStyle.COLOR.FOOTER_DARK
+        }
+        as={Link}
+        to={URLS.HOME_PAGE}
+      >
         <StyledParagraph fontWeight={"bold"}>
           <u>{"www.space-chat.com"}</u>
         </StyledParagraph>

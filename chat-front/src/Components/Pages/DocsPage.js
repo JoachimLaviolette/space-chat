@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import io from "socket.io-client";
-import { Link, Page } from "..";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { Link, Page, Rooms } from "..";
 import {
   StyledAnchor,
   StyledButton,
@@ -11,8 +12,7 @@ import {
   DefaultStyle,
 } from "../../Styles";
 import { Themes, URLS } from "../../Utils";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import { ActionType, updateRooms } from "../../Redux/Actions";
 
 class DocsPage extends Component {
   constructor(props) {
@@ -29,6 +29,7 @@ class DocsPage extends Component {
           textColor: DefaultStyle.COLOR.LIGHT,
         },
       },
+      content: [],
       contentHtml: "",
     };
     this.contentEditorRef = undefined;
@@ -38,11 +39,14 @@ class DocsPage extends Component {
   }
 
   componentDidMount() {
+    this.props.socket.emit("fetchRooms");
     this.getContentEditor();
   }
 
   componentDidUpdate() {
     this.getContentEditor();
+    if (this.props.action !== ActionType.UPDATE_ROOM_SUCCESS) return;
+    if (this.props.room) this.props.socket.emit("fetchRoom", this.props.room);
   }
 
   /**
@@ -66,15 +70,30 @@ class DocsPage extends Component {
     this.setState({
       contentHtml: contentHtml,
     });
-    this.socket.emit("updateDocs", this.contentEditor.getContents());
+    this.props.socket.emit(
+      "updateDocs",
+      {
+        pseudo: this.props.user.pseudo,
+        content: this.contentEditor.getContents(),
+        time: new Date().toLocaleTimeString(),
+      },
+      this.props.room
+    );
   };
 
   /**
    * Setup the real time server
    */
   setupServer = () => {
-    this.socket = io.connect("http://localhost:5000");
-    this.socket.on("updateDocs", (docsContent) => this.updateDocs(docsContent));
+    this.props.socket.on("updateDocs", (docsContent) =>
+      this.updateDocs(docsContent)
+    );
+    this.props.socket.on("fetchRoom", (room) =>
+      this.updateDocs(room.history.docs)
+    );
+    this.props.socket.on("fetchRooms", (rooms) =>
+      this.props.updateRooms(rooms)
+    );
   };
 
   /**
@@ -82,7 +101,11 @@ class DocsPage extends Component {
    * @param {Quill.Delta} docsContent The updated docs content to now display
    */
   updateDocs = (docsContent) => {
-    this.contentEditor.setContents(docsContent, "api");
+    this.setState({ content: docsContent });
+    this.contentEditor.setContents(
+      docsContent[docsContent.length - 1].content,
+      "api"
+    );
   };
 
   /**
@@ -127,6 +150,7 @@ class DocsPage extends Component {
         mobileMargin={"auto 2rem"}
         padding={"2rem"}
       >
+        <Rooms margin={"0 0 3rem 0"} rooms={this.props.rooms} />
         <StyledH3
           theme={this.props.theme}
           padding={"0 0 2rem 0"}
@@ -164,4 +188,7 @@ class DocsPage extends Component {
   );
 }
 const mapStateToProps = (state) => ({ ...state, currentPath: URLS.DOCS_PAGE });
-export default connect(mapStateToProps, null)(DocsPage);
+const mapDispatchToProps = {
+  updateRooms,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(DocsPage);

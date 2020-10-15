@@ -2,10 +2,19 @@ import React from "react";
 import { connect } from "react-redux";
 import { DefaultStyle, StyledFlexBox } from "../Styles";
 import { ThemeSwitcher } from ".";
+import { Themes } from "../Utils";
 
 const Header = (props) => {
   return (
-    <StyledFlexBox backgroundColor={DefaultStyle.COLOR.HEADER} padding={"2rem"}>
+    <StyledFlexBox
+      backgroundColor={
+        props.theme === Themes.LIGHT
+          ? DefaultStyle.COLOR.HEADER_LIGHT
+          : DefaultStyle.COLOR.HEADER_DARK
+      }
+      padding={"1rem"}
+      alignItems={"center"}
+    >
       <ThemeSwitcher />
     </StyledFlexBox>
   );

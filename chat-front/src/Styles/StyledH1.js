@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Themes } from "../Utils";
 import { DefaultStyle } from "./DefaultStyle";
 
 const StyledH1 = styled.p`

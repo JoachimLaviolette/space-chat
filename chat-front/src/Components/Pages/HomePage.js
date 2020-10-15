@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import io from "socket.io-client";
 import { Page } from "../";
 import {
   StyledH3,
@@ -22,16 +21,17 @@ class HomePage extends Component {
         [Themes.LIGHT]: {
           backgroundColor: DefaultStyle.COLOR.LIGHT,
           textColor: DefaultStyle.COLOR.DARK,
+          inputBackgroundColor: DefaultStyle.COLOR.TERTIARY,
         },
         [Themes.DARK]: {
           backgroundColor: DefaultStyle.COLOR.DARK,
           textColor: DefaultStyle.COLOR.LIGHT,
+          inputBackgroundColor: DefaultStyle.COLOR.ORIGIN,
         },
       },
       pseudo: props.user ? props.user.pseudo : "",
       redirect: undefined,
     };
-    this.socket = io.connect("http://localhost:5000");
     this.handleChange = this.handleChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
   }
@@ -51,7 +51,7 @@ class HomePage extends Component {
     this.props.login({
       pseudo: this.state.pseudo,
     });
-    this.socket.emit("registerUser", this.state.pseudo);
+    this.props.socket.emit("registerUser", this.state.pseudo);
   };
 
   componentDidUpdate() {
@@ -59,7 +59,7 @@ class HomePage extends Component {
     if (this.props.action === ActionType.LOGIN_SUCCESS) {
       this.setState({
         pseudo: "",
-        redirect: <Redirect push to={URLS.CHAT_PAGE} />,
+        redirect: <Redirect push to={URLS.ROOM_PAGE} />,
       });
     }
   }
@@ -89,6 +89,10 @@ class HomePage extends Component {
               autoComplete={"off"}
               value={this.state.pseudo}
               placeholder={"Your pseudo here"}
+              backgroundColor={
+                this.state.params[this.props.theme].inputBackgroundColor
+              }
+              borderColor={this.state.params[this.props.theme].inputBorderColor}
               onChange={this.handleChange}
             />
             <StyledConfirmButton
@@ -106,6 +110,6 @@ class HomePage extends Component {
 }
 const mapStateToProps = (state) => ({ ...state, currentPath: URLS.HOME_PAGE });
 const mapDispatchToProps = {
-  login: login,
+  login,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
