@@ -56,21 +56,21 @@ socketIOServer = (server) => {
     // When a user sends a message in the chat of a room
     // The message must be in the format { pseudo, content, time }
     socket.on("updateChat", (message, roomId) => {
-      const roomChat = getRoom(roomId).history.chat;
+      const chatHistory = getRoom(roomId).history.chat;
       // Update the chat history of the room
-      roomChat.push(message);
+      chatHistory.push(message);
       // Send the chat content to the chat participants
-      io.to(roomId).emit("updateChat", roomChat);
+      io.to(roomId).emit("updateChat", chatHistory);
     });
 
     // When a user update the docs content of a room
     // The docs content must be in the format { pseudo, content, time }
     socket.on("updateDocs", (newContent, roomId) => {
-      const roomDocs = getRoom(roomId).history.docs;
+      const docsHistory = getRoom(roomId).history.docs;
       // Update the docs history of the room
-      roomDocs.push(newContent);
+      docsHistory.push(newContent);
       // Send the updated content to the other chat participants
-      socket.to(roomId).emit("updateDocs", roomDocs);
+      socket.to(roomId).emit("updateDocs", docsHistory);
     });
 
     // When a user leaves the app

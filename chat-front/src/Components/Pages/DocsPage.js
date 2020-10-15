@@ -29,7 +29,7 @@ class DocsPage extends Component {
           textColor: DefaultStyle.COLOR.LIGHT,
         },
       },
-      content: [],
+      docsHistory: [],
       contentHtml: "",
     };
     this.contentEditorRef = undefined;
@@ -85,8 +85,8 @@ class DocsPage extends Component {
    * Setup the real time server
    */
   setupServer = () => {
-    this.props.socket.on("updateDocs", (docsContent) =>
-      this.updateDocs(docsContent)
+    this.props.socket.on("updateDocs", (docsHistory) =>
+      this.updateDocs(docsHistory)
     );
     this.props.socket.on("fetchRoom", (room) =>
       this.updateDocs(room.history.docs)
@@ -98,16 +98,17 @@ class DocsPage extends Component {
 
   /**
    * Called when the server sends back the event "updateDocs"
-   * @param {Quill.Delta} docsContent The updated docs content to now display
+   * @param {Array} docsHistory The updated docs history
    */
-  updateDocs = (docsContent) => {
-    console.log("hey");
-    console.log(docsContent);
-    this.setState({ content: docsContent });
-    this.contentEditor.setContents(
-      docsContent[docsContent.length - 1].content,
-      "api"
-    );
+  updateDocs = (docsHistory) => {
+    this.setState({ docsHistory });
+
+    if (docsHistory.length === 0) this.contentEditor.setText("");
+    else
+      this.contentEditor.setContents(
+        docsHistory[docsHistory.length - 1].content,
+        "api"
+      );
   };
 
   /**

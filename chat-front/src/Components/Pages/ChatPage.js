@@ -38,7 +38,7 @@ class ChatPage extends Component {
           inputBackgroundColor: DefaultStyle.COLOR.ORIGIN,
         },
       },
-      content: [],
+      chatHistory: [],
       message: "",
     };
     this.handleChange = this.handleChange.bind(this);
@@ -82,8 +82,8 @@ class ChatPage extends Component {
    * Setup the real time server
    */
   setupServer = () => {
-    this.props.socket.on("updateChat", (chatContent) =>
-      this.updateChat(chatContent)
+    this.props.socket.on("updateChat", (chatHistory) =>
+      this.updateChat(chatHistory)
     );
     this.props.socket.on("fetchRoom", (room) =>
       this.updateChat(room.history.chat)
@@ -95,11 +95,11 @@ class ChatPage extends Component {
 
   /**
    * Called when the server sends back the event "updateChat"
-   * @param {Array} chatContent The chat content
+   * @param {Array} chatHistory The updated chat history
    */
-  updateChat = (chatContent) => {
+  updateChat = (chatHistory) => {
     this.setState({
-      content: chatContent,
+      chatHistory,
     });
     const contentContainer = document.querySelector("#content");
     if (!contentContainer) return;
@@ -134,7 +134,7 @@ class ChatPage extends Component {
           borderRadius={"0.5rem"}
           boxShadow={this.state.params[this.props.theme].chatBackgroundShadow}
         >
-          {this.state.content.map((message) => {
+          {this.state.chatHistory.map((message) => {
             return (
               <StyledParagraph
                 fontSize={DefaultStyle.FONT_SIZE.SMALL}
