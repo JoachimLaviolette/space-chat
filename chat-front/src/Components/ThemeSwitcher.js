@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { DefaultStyle, StyledThemeSwitcher, StyledParagraph } from "../Styles";
+import { DefaultStyle, StyledThemeSwitcher } from "../Styles";
 import { Themes } from "../Utils";
 import { updateTheme } from "../Redux/Actions";
 

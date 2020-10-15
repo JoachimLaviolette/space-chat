@@ -39,8 +39,9 @@ class DocsPage extends Component {
   }
 
   componentDidMount() {
-    this.props.socket.emit("fetchRooms");
     this.getContentEditor();
+    this.props.socket.emit("fetchRooms");
+    if (this.props.room) this.props.socket.emit("fetchRoom", this.props.room);
   }
 
   componentDidUpdate() {
@@ -64,7 +65,6 @@ class DocsPage extends Component {
    * @param {string} source Who the update comes from, the client itself ("user") or the server ("api")
    */
   handleChange = (contentHtml, delta, source) => {
-    console.log(source);
     if (source === "api") return;
 
     this.setState({
@@ -101,6 +101,8 @@ class DocsPage extends Component {
    * @param {Quill.Delta} docsContent The updated docs content to now display
    */
   updateDocs = (docsContent) => {
+    console.log("hey");
+    console.log(docsContent);
     this.setState({ content: docsContent });
     this.contentEditor.setContents(
       docsContent[docsContent.length - 1].content,

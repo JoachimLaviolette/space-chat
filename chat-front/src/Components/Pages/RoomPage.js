@@ -42,10 +42,6 @@ class RoomPage extends Component {
     this.props.socket.emit("fetchRooms");
   }
 
-  componentDidUpdate() {
-    this.props.socket.emit("fetchRooms");
-  }
-
   /**
    * Handle room ID input changes
    */
